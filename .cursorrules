@@ -1,0 +1,79 @@
+# Lancer — Cursor Rules
+
+## About the User
+
+Jack is a non-technical founder. He has great product instincts and design taste, but he's new to coding. Explain what you're doing and why. Use plain language. Use business analogies when helpful.
+
+## Project Context
+
+This is the Lancer landing page and web app — a marketplace connecting skilled workers with homeowners. Read `CLAUDE.md` for full project context, current state, and tech details.
+
+## Tech Stack Rules
+
+- **Next.js 16** with App Router (`app/` directory)
+- **TypeScript** for all code
+- **Tailwind CSS v4** — uses `@import "tailwindcss"` in CSS, NOT a tailwind.config.js
+- **React 19** — Server Components by default, `'use client'` only when needed
+- **Geist Sans** font (already configured in layout.tsx)
+
+## Code Style
+
+- Functional components with hooks
+- One component per file
+- Files under 200 lines (split if larger)
+- Use the `@/` path alias for imports (maps to `src/`)
+- Comment the "why" not the "what"
+- Handle loading, error, and empty states in all interactive components
+
+## Design System
+
+Follow the established design patterns — don't introduce new colors or styles without checking CLAUDE.md's Design System section first.
+
+- **Primary:** emerald-600 / emerald-500
+- **Text:** slate-900 (headings), slate-600 (body)
+- **Backgrounds:** white and slate-50 (alternating sections)
+- **Components:** rounded-2xl cards, rounded-full buttons, generous padding
+- **Layout:** max-w-7xl container, mobile-first responsive
+
+## Component Patterns
+
+- Section components go in `src/components/sections/`
+- Form components go in `src/components/forms/`
+- Shared UI components go in `src/components/ui/` (create as needed)
+- Utility functions go in `src/lib/`
+- Type definitions go in `src/types/`
+- Custom hooks go in `src/hooks/`
+
+## When Writing Code
+
+- Prefer simple over clever
+- Use Tailwind classes, never inline styles or CSS modules
+- Use Next.js `<Image>` for images, `<Link>` for internal navigation
+- Use `<a>` with `href="#section"` for same-page anchor links
+- Always test responsive: mobile → tablet → desktop
+- Run `npm run build` before saying you're done
+
+## Agent System
+
+This project uses agents defined in `docs/agents/`. Each agent has a specific role. Before starting work, read:
+1. This file (auto-read by Cursor)
+2. `CLAUDE.md` (auto-read by Claude)
+3. The relevant agent prompt in `docs/agents/`
+4. The relevant workflow in `docs/workflows/`
+
+## Git Rules
+
+- Always work on a feature branch (never commit directly to main)
+- Use conventional commits: `feat:`, `fix:`, `style:`, `content:`, `docs:`, `refactor:`
+- Commit at natural save points
+- Push after every commit
+- Create PRs for Jack to review — he merges in GitHub
+- Never commit `.env.local`, `data/`, or `node_modules/`
+
+## When Jack Says...
+
+- **"Update the copy"** → Content changes only, use Content Editor workflow
+- **"Make it look better"** → Styling/design changes, use Content Editor workflow
+- **"Add [feature]"** → Full feature workflow: research → plan → review → build → code review
+- **"Ship it"** → Create PR, get it merged, verify Amplify deployment
+- **"How does this work?"** → Explain with business analogies, be patient

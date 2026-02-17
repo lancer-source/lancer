@@ -2,6 +2,11 @@
 
 import { useState, FormEvent } from 'react';
 
+const USER_TYPE_OPTIONS = [
+  { value: 'worker', label: "I'm a Worker" },
+  { value: 'homeowner', label: "I'm a Homeowner" },
+];
+
 interface WaitlistFormProps {
   variant?: 'hero' | 'section';
   theme?: 'light' | 'dark';
@@ -14,6 +19,7 @@ export function WaitlistForm({
   className = '',
 }: WaitlistFormProps) {
   const [email, setEmail] = useState('');
+  const [userType, setUserType] = useState('');
   const [status, setStatus] = useState<
     'idle' | 'loading' | 'success' | 'error'
   >('idle');
@@ -23,6 +29,12 @@ export function WaitlistForm({
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+
+    if (!userType) {
+      setErrorMessage("Please select whether you're a worker or homeowner.");
+      setStatus('error');
+      return;
+    }
 
     if (!email || !email.includes('@')) {
       setErrorMessage('Please enter a valid email address.');
@@ -37,7 +49,7 @@ export function WaitlistForm({
       const response = await fetch('/api/waitlist', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, userType }),
       });
 
       const data = await response.json();
@@ -48,6 +60,7 @@ export function WaitlistForm({
 
       setStatus('success');
       setEmail('');
+      setUserType('');
     } catch (err) {
       setErrorMessage(
         err instanceof Error ? err.message : 'Something went wrong. Please try again.'
@@ -91,6 +104,33 @@ export function WaitlistForm({
 
   return (
     <form onSubmit={handleSubmit} className={className}>
+      {/* User type pill selector */}
+      <div className="mb-4 flex justify-center gap-3">
+        {USER_TYPE_OPTIONS.map((option) => {
+          const isSelected = userType === option.value;
+          return (
+            <button
+              key={option.value}
+              type="button"
+              onClick={() => {
+                setUserType(option.value);
+                if (status === 'error') setStatus('idle');
+              }}
+              className={`rounded-full px-5 py-2 text-sm font-medium transition-all ${
+                isSelected
+                  ? 'bg-brand-600 text-white shadow-sm'
+                  : isDark
+                    ? 'border border-white/20 text-slate-300 hover:border-brand-500 hover:text-brand-300'
+                    : 'border border-slate-300 text-slate-600 hover:border-brand-500 hover:text-brand-600'
+              }`}
+            >
+              {option.label}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Email input and submit */}
       <div
         className={`flex gap-3 ${
           isHero ? 'flex-col sm:flex-row' : 'flex-col sm:flex-row'

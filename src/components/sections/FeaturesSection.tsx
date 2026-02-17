@@ -82,12 +82,12 @@ export function FeaturesSection() {
           {features.map((feature) => (
             <div
               key={feature.number}
-              className="group relative rounded-2xl border border-slate-200 bg-white p-8 transition-all hover:border-emerald-200 hover:shadow-lg hover:shadow-emerald-500/5"
+              className="group relative rounded-2xl border border-slate-200 bg-white p-8 transition-all hover:border-brand-200 hover:shadow-lg hover:shadow-brand-500/5"
             >
-              <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 transition-colors group-hover:bg-emerald-100">
+              <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-brand-50 text-brand-600 transition-colors group-hover:bg-brand-100">
                 {feature.icon}
               </div>
-              <div className="mb-2 text-xs font-semibold uppercase tracking-wider text-emerald-600">
+              <div className="mb-2 text-xs font-semibold uppercase tracking-wider text-brand-600">
                 {feature.number}
               </div>
               <h3 className="text-xl font-semibold text-slate-900">

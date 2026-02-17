@@ -28,11 +28,6 @@ const faqs = [
     answer:
       'Absolutely. Lancer is perfect for anyone seeking flexible income — retirees, students, side-hustlers, or anyone who wants to work on their own terms. There are no minimum hour requirements.',
   },
-  {
-    question: 'How is Lancer different from TaskRabbit?',
-    answer:
-      'Lancer cuts out the middleman. Instead of a platform controlling pricing and taking a large cut, Lancer connects you directly with homeowners. You set your own rates, build your own client relationships, and keep more of your earnings.',
-  },
 ];
 
 export function FAQSection() {

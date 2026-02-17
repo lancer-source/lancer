@@ -70,11 +70,10 @@ export function FeaturesSection() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
-            Built for skilled workers
+            Built for hard workers
           </h2>
           <p className="mt-4 text-lg text-slate-600">
-            Traditional platforms take a cut and control your workflow. Lancer
-            puts you back in charge.
+            Earn your keep. Keep what you earn.
           </p>
         </div>
 

@@ -114,7 +114,7 @@ export function WaitlistForm({
           disabled={status === 'loading'}
           className="rounded-full bg-brand-600 px-8 py-3 text-base font-medium text-white transition-all hover:bg-brand-700 disabled:cursor-not-allowed disabled:opacity-60 whitespace-nowrap"
         >
-          {status === 'loading' ? 'Joining...' : 'Get Early Access'}
+          {status === 'loading' ? 'Joining...' : 'Join Waitlist'}
         </button>
       </div>
 
@@ -125,7 +125,7 @@ export function WaitlistForm({
       )}
 
       <p className={`mt-3 text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-        Free to join. No spam, ever.
+        Free to join. Unsubscribe at any time.
       </p>
     </form>
   );

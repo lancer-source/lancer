@@ -6,7 +6,7 @@ export function CTASection() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="relative overflow-hidden rounded-3xl bg-slate-900 px-8 py-16 text-center md:px-16 md:py-24">
           {/* Subtle gradient decoration */}
-          <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/20 via-transparent to-emerald-600/10" />
+          <div className="absolute inset-0 bg-gradient-to-br from-brand-600/20 via-transparent to-brand-600/10" />
 
           <div className="relative">
             <h2 className="text-3xl font-bold tracking-tight text-white md:text-5xl">

@@ -62,8 +62,8 @@ export function WaitlistForm({
         <div
           className={`flex items-center gap-2 rounded-full px-5 py-3 ${
             isDark
-              ? 'bg-emerald-500/20 text-emerald-300'
-              : 'bg-emerald-50 text-emerald-700'
+              ? 'bg-brand-500/20 text-brand-300'
+              : 'bg-brand-50 text-brand-700'
           }`}
         >
           <svg
@@ -104,7 +104,7 @@ export function WaitlistForm({
             if (status === 'error') setStatus('idle');
           }}
           placeholder="Enter your email"
-          className={`flex-1 rounded-full border bg-white px-5 py-3 text-base text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 ${
+          className={`flex-1 rounded-full border bg-white px-5 py-3 text-base text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 ${
             isDark ? 'border-white/20' : 'border-slate-300'
           } ${isHero ? 'sm:min-w-[300px]' : ''}`}
           disabled={status === 'loading'}
@@ -112,7 +112,7 @@ export function WaitlistForm({
         <button
           type="submit"
           disabled={status === 'loading'}
-          className="rounded-full bg-emerald-600 px-8 py-3 text-base font-medium text-white transition-all hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-60 whitespace-nowrap"
+          className="rounded-full bg-brand-600 px-8 py-3 text-base font-medium text-white transition-all hover:bg-brand-700 disabled:cursor-not-allowed disabled:opacity-60 whitespace-nowrap"
         >
           {status === 'loading' ? 'Joining...' : 'Get Early Access'}
         </button>

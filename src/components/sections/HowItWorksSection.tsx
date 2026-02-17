@@ -86,12 +86,12 @@ export function HowItWorksSection() {
               )}
 
               {/* Step icon */}
-              <div className="relative mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-white text-emerald-600 shadow-sm ring-1 ring-slate-200">
+              <div className="relative mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-white text-brand-600 shadow-sm ring-1 ring-slate-200">
                 {step.icon}
               </div>
 
               {/* Step label */}
-              <div className="mb-2 text-sm font-semibold text-emerald-600">
+              <div className="mb-2 text-sm font-semibold text-brand-600">
                 Step {step.number}
               </div>
 

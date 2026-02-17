@@ -31,7 +31,7 @@ export function MarketplaceSection() {
         <div className="mt-16 grid gap-8 md:grid-cols-2">
           {/* For Workers */}
           <div className="rounded-2xl border border-slate-200 bg-white p-8 md:p-10">
-            <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
+            <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-brand-50 text-brand-600">
               <svg
                 className="h-6 w-6"
                 fill="none"
@@ -53,7 +53,7 @@ export function MarketplaceSection() {
               {workerBenefits.map((item) => (
                 <li key={item} className="flex items-start gap-3">
                   <svg
-                    className="mt-0.5 h-5 w-5 shrink-0 text-emerald-500"
+                    className="mt-0.5 h-5 w-5 shrink-0 text-brand-500"
                     fill="none"
                     viewBox="0 0 24 24"
                     strokeWidth={2}
@@ -95,7 +95,7 @@ export function MarketplaceSection() {
               {homeownerBenefits.map((item) => (
                 <li key={item} className="flex items-start gap-3">
                   <svg
-                    className="mt-0.5 h-5 w-5 shrink-0 text-emerald-500"
+                    className="mt-0.5 h-5 w-5 shrink-0 text-brand-500"
                     fill="none"
                     viewBox="0 0 24 24"
                     strokeWidth={2}

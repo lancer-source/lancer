@@ -141,6 +141,20 @@ This project uses AI agents for development. Each agent has a specific role and 
 | Senior Reviewer | `docs/agents/senior-reviewer.md` | Review and improve implementation plans |
 | Feature Builder | `docs/agents/feature-builder.md` | Implement features from approved plans |
 | Code Reviewer | `docs/agents/code-reviewer.md` | Review code before merging PRs |
+| Product Feedback | `docs/agents/product-feedback.md` | Analyze design/UI and provide recommendations |
+
+### Agent Templates
+
+Reusable templates for creating new agents live in `docs/agents/templates/`:
+
+| Template | Purpose |
+|----------|---------|
+| `prompt-engineer.md` | Create and improve other agents |
+| `builder-agent.md` | Build features, pages, and components |
+| `research-agent.md` | Investigate tools, patterns, and best practices |
+| `advisor-agent.md` | Strategic and technical advice |
+
+To create a new agent, copy the relevant template, fill in the `[brackets]`, and save to `docs/agents/`.
 
 ### Two Workflow Types
 

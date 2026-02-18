@@ -59,20 +59,61 @@ Auth and profile pages (for investor demos — not linked from the landing page)
 
 **Note:** Replace `3000` with whatever port your dev server is actually running on.
 
+## Demo Account Setup
+
+### The "Hero" Demo Account (create once, use forever)
+
+Sign up once with credentials you'll remember, then build a polished profile:
+
+- **Email:** Use your real email (e.g., `jack@example.com`)
+- **Password:** Something you'll remember for live demos
+- **Profile:** Fill in a complete name, bio, professional photo, and skills
+
+This is the account you log into to show off the finished profile during pitches. Log in at `/login`, walk them through the profile, done.
+
+### Fresh Signup Demos (show the signup flow live)
+
+To demo the signup flow in front of an investor, you need a "new" email each time. Gmail makes this easy with the **+alias trick** — add `+anything` before the `@` and it all goes to your same inbox:
+
+- `yourname+demo1@gmail.com`
+- `yourname+demo2@gmail.com`
+- `yourname+investor-acme@gmail.com`
+- `yourname+pitch-feb18@gmail.com`
+
+Each one is unique to Supabase, so you can sign up fresh every time. Use a simple password you can type quickly on stage (e.g., `demo123456`).
+
+### Cleaning Up Old Demo Accounts
+
+If you want to delete test accounts, go to [Supabase Authentication](https://supabase.com/dashboard/project/ldmdtkgijsnnbrmdsvxw/auth/users), find the user, and click the three-dot menu → Delete User. The profile row gets deleted automatically (cascade).
+
 ## Running an Investor Demo
 
-Here's a smooth walkthrough flow:
+### Recommended flow (5 minutes)
 
-1. Open `http://localhost:3000` — show the landing page and waitlist
-2. Navigate to `http://localhost:3000/signup` — create a new account
-3. Pick "I'm ready to work" or "I'm looking for help"
-4. Enter an email and password, click Create Account
-5. Fill out the profile — name, bio, upload a photo, add skills/needs
-6. View the completed profile at `/profile`
-7. Show the edit flow at `/profile/edit`
-8. Show the login flow — log out, then log back in at `/login`
+1. **Start with the landing page** — `http://localhost:3000`
+   - "This is what consumers see. Clean, simple, waitlist capture."
+   - Scroll through the sections briefly.
 
-**Tip:** Create a demo account ahead of time so you have a polished profile ready to show. You can always create a fresh one live to demonstrate the signup flow.
+2. **Show the signup flow** — navigate to `/signup`
+   - "Let me show you the actual product experience."
+   - Pick "I'm ready to work", enter a fresh +alias email, sign up.
+
+3. **Complete the profile** — you'll land on `/profile/setup`
+   - Fill in a name, write a quick bio, upload a photo, add a few skills.
+   - "This is what every Lancer fills out when they join."
+
+4. **Show the finished profile** — you'll land on `/profile`
+   - "This is what homeowners will see when they're looking for help."
+
+5. **Switch to the hero account** — log out, log in at `/login` with your polished demo account
+   - "And here's a more complete profile with everything filled out."
+
+### Tips for a smooth demo
+
+- **Pre-load the pages** in browser tabs before the meeting so there's no waiting.
+- **Use your phone** to show mobile responsiveness — just open the same URL on your phone if you're on the same WiFi.
+- **Have a photo ready** on your desktop for the avatar upload — don't dig through folders during the pitch.
+- **Use a simple demo password** you can type without looking at the keyboard.
 
 ## Troubleshooting
 

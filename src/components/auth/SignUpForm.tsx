@@ -14,7 +14,6 @@ export function SignUpForm() {
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
   const [userType, setUserType] = useState<UserType | ''>('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [errorMessage, setErrorMessage] = useState('')
@@ -23,7 +22,7 @@ export function SignUpForm() {
     e.preventDefault()
 
     if (!userType) {
-      setErrorMessage("Please select whether you're a Lancer or homeowner.")
+      setErrorMessage('Please select whether you offer or need services.')
       setStatus('error')
       return
     }
@@ -40,17 +39,11 @@ export function SignUpForm() {
       return
     }
 
-    if (password !== confirmPassword) {
-      setErrorMessage('Passwords don\'t match.')
-      setStatus('error')
-      return
-    }
-
     setStatus('loading')
     setErrorMessage('')
 
     const supabase = createClient()
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -68,8 +61,35 @@ export function SignUpForm() {
       return
     }
 
-    setStatus('success')
+    // If Supabase returned a user but no session, email confirmation is required
+    if (data?.user && !data.session) {
+      setStatus('success')
+      return
+    }
+
     router.push('/profile/setup')
+  }
+
+  if (status === 'success') {
+    return (
+      <div className="space-y-4 text-center">
+        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-brand-50">
+          <svg className="h-6 w-6 text-brand-600" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+          </svg>
+        </div>
+        <h2 className="text-lg font-semibold text-slate-900">Check your email</h2>
+        <p className="text-sm text-slate-600">
+          We sent a confirmation link to <strong>{email}</strong>. Click it to activate your account.
+        </p>
+        <Link
+          href="/login"
+          className="inline-block text-sm font-medium text-brand-600 hover:text-brand-700"
+        >
+          Back to login
+        </Link>
+      </div>
+    )
   }
 
   return (
@@ -111,20 +131,6 @@ export function SignUpForm() {
         autoComplete="new-password"
       />
 
-      <AuthInput
-        id="confirm-password"
-        label="Confirm Password"
-        type="password"
-        value={confirmPassword}
-        onChange={(val) => {
-          setConfirmPassword(val)
-          if (status === 'error') setStatus('idle')
-        }}
-        placeholder="Confirm your password"
-        disabled={status === 'loading'}
-        autoComplete="new-password"
-      />
-
       {status === 'error' && errorMessage && (
         <p className="text-sm text-red-600">{errorMessage}</p>
       )}
@@ -142,7 +148,7 @@ export function SignUpForm() {
         </div>
       </div>
 
-      <GoogleAuthButton label="Sign up with Google" />
+      <GoogleAuthButton label="Sign up with Google" userType={userType || undefined} />
 
       <p className="text-center text-sm text-slate-600">
         Already have an account?{' '}

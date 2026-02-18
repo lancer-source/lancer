@@ -5,16 +5,19 @@ import { AuthButton } from '@/components/ui/AuthButton'
 
 interface GoogleAuthButtonProps {
   label?: string
+  userType?: string
 }
 
-export function GoogleAuthButton({ label = 'Continue with Google' }: GoogleAuthButtonProps) {
+export function GoogleAuthButton({ label = 'Continue with Google', userType }: GoogleAuthButtonProps) {
   const handleGoogleLogin = async () => {
     const supabase = createClient()
+    const redirectTo = userType
+      ? `${window.location.origin}/auth/callback?user_type=${userType}`
+      : `${window.location.origin}/auth/callback`
+
     await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
-      },
+      options: { redirectTo },
     })
   }
 

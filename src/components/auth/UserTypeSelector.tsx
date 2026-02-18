@@ -1,8 +1,8 @@
 import type { UserType } from '@/types/database'
 
 const USER_TYPE_OPTIONS: { value: UserType; label: string }[] = [
-  { value: 'lancer', label: "I'm a Lancer" },
-  { value: 'homeowner', label: "I'm a Homeowner" },
+  { value: 'lancer', label: 'I offer services' },
+  { value: 'homeowner', label: 'I need services' },
 ]
 
 interface UserTypeSelectorProps {

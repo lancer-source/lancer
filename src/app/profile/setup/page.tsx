@@ -21,7 +21,10 @@ export default async function ProfileSetupPage() {
     .eq('id', user.id)
     .single()
 
-  if (!profile) redirect('/login')
+  if (!profile) {
+    await supabase.auth.signOut()
+    redirect('/signup')
+  }
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-slate-50 px-4 py-12">

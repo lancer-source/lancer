@@ -1,41 +1,11 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
-
-const DATA_FILE = path.join(process.cwd(), 'data', 'waitlist.json');
-
-/**
- * Read the current waitlist from the JSON file.
- * For production, swap this out for a database (DynamoDB, Supabase, etc.)
- */
-function getWaitlist(): string[] {
-  try {
-    if (fs.existsSync(DATA_FILE)) {
-      const data = fs.readFileSync(DATA_FILE, 'utf-8');
-      return JSON.parse(data);
-    }
-  } catch {
-    // If file is corrupted, start fresh
-  }
-  return [];
-}
-
-/**
- * Save the waitlist to the JSON file.
- * Creates the data directory if it doesn't exist.
- */
-function saveWaitlist(emails: string[]) {
-  const dir = path.dirname(DATA_FILE);
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
-  }
-  fs.writeFileSync(DATA_FILE, JSON.stringify(emails, null, 2));
-}
+import { createSupabaseAdmin } from '@/lib/supabase';
 
 export async function POST(request: Request) {
   try {
-    const { email } = await request.json();
+    const { email, userType } = await request.json();
 
+    // Validate email
     if (!email || typeof email !== 'string') {
       return NextResponse.json(
         { error: 'Email is required.' },
@@ -45,7 +15,6 @@ export async function POST(request: Request) {
 
     const trimmedEmail = email.trim().toLowerCase();
 
-    // Basic email validation
     if (!trimmedEmail.includes('@') || !trimmedEmail.includes('.')) {
       return NextResponse.json(
         { error: 'Please enter a valid email address.' },
@@ -53,22 +22,38 @@ export async function POST(request: Request) {
       );
     }
 
-    const waitlist = getWaitlist();
-
-    // Check for duplicates
-    if (waitlist.includes(trimmedEmail)) {
+    // Validate user type
+    const validTypes = ['worker', 'homeowner'];
+    if (!userType || !validTypes.includes(userType)) {
       return NextResponse.json(
-        { error: 'This email is already on the waitlist.' },
-        { status: 409 }
+        { error: 'Please select whether you\'re a worker or homeowner.' },
+        { status: 400 }
       );
     }
 
-    waitlist.push(trimmedEmail);
-    saveWaitlist(waitlist);
+    const supabase = createSupabaseAdmin();
 
-    console.log(
-      `[Waitlist] New signup: ${trimmedEmail} (Total: ${waitlist.length})`
-    );
+    // Insert into the waitlist table
+    const { error } = await supabase
+      .from('waitlist')
+      .insert({ email: trimmedEmail, user_type: userType });
+
+    // Handle duplicate email (Postgres unique constraint violation)
+    if (error) {
+      if (error.code === '23505') {
+        return NextResponse.json(
+          { error: 'This email is already on the waitlist.' },
+          { status: 409 }
+        );
+      }
+      console.error('[Waitlist] Supabase error:', error);
+      return NextResponse.json(
+        { error: 'Something went wrong. Please try again.' },
+        { status: 500 }
+      );
+    }
+
+    console.log(`[Waitlist] New signup: ${trimmedEmail} (${userType})`);
 
     return NextResponse.json({
       success: true,
@@ -85,10 +70,18 @@ export async function POST(request: Request) {
 
 export async function GET() {
   try {
-    const waitlist = getWaitlist();
-    return NextResponse.json({
-      count: waitlist.length,
-    });
+    const supabase = createSupabaseAdmin();
+
+    const { count, error } = await supabase
+      .from('waitlist')
+      .select('*', { count: 'exact', head: true });
+
+    if (error) {
+      console.error('[Waitlist] Count error:', error);
+      return NextResponse.json({ count: 0 });
+    }
+
+    return NextResponse.json({ count: count ?? 0 });
   } catch {
     return NextResponse.json({ count: 0 });
   }
